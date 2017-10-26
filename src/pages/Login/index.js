@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Redirect } from 'react-router-dom';
 import { Button } from '@blueprintjs/core';
-import { firebaseAuth } from 'FirebaseConfig';
+import { firebaseAuth, isAuthenticated } from 'FirebaseConfig';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -40,6 +40,14 @@ class Login extends Component {
     password: '',
     error: null
   };
+
+  componentDidMount() {
+    if (isAuthenticated()) {
+      this.setState({
+        redirectToReferrer: true
+      });
+    }
+  }
 
   handleLogin = event => {
     event.preventDefault();
